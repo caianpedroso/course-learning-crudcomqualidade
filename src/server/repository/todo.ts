@@ -1,19 +1,27 @@
 import { HttpNotFoundError } from "@server/infra/errors";
-import { read, create, update, deleteById as dbDeleteById } from "../../../core/crud";
+import {
+    read,
+    create,
+    update,
+    deleteById as dbDeleteById,
+} from "../../../core/crud";
 
-interface  TodoRepositoryGetParams {
+interface TodoRepositoryGetParams {
     page?: number;
     limit?: number;
 }
 
 interface TodoRepositoryGetOutput {
-   todos: Todo[];
-   total: number;
-   pages: number; 
+    todos: Todo[];
+    total: number;
+    pages: number;
 }
 
-function get({page, limit}: TodoRepositoryGetParams = {}): TodoRepositoryGetOutput {
-    const currentPage = page || 1
+function get({
+    page,
+    limit,
+}: TodoRepositoryGetParams = {}): TodoRepositoryGetOutput {
+    const currentPage = page || 1;
     const currentLimit = limit || 10;
 
     const ALL_TODOS = read().reverse();
@@ -26,25 +34,24 @@ function get({page, limit}: TodoRepositoryGetParams = {}): TodoRepositoryGetOutp
         todos: paginatedTodos,
         total: ALL_TODOS.length,
         pages: totalPages,
-    }
+    };
 }
 
 async function createByContent(content: string): Promise<Todo> {
-    const newTodo =  create(content);
+    const newTodo = create(content);
 
     return newTodo;
 }
 
 async function toggleDone(id: string): Promise<Todo> {
-    
     const ALL_TODOS = read();
     const todo = ALL_TODOS.find((todo) => todo.id === id);
 
-    if(!todo) throw new Error(`Todo with id "${id}" not found`);
+    if (!todo) throw new Error(`Todo with id "${id}" not found`);
 
     const updateTodo = update(id, {
-        done: !todo.done
-    })
+        done: !todo.done,
+    });
     return updateTodo;
 }
 
@@ -53,16 +60,16 @@ async function deleteById(id: string) {
     const ALL_TODOS = read();
     const todo = ALL_TODOS.find((todo) => todo.id === id);
 
-    if(!todo) throw new HttpNotFoundError(`Todo with id "${id}" not found`);
+    if (!todo) throw new HttpNotFoundError(`Todo with id "${id}" not found`);
 
-    dbDeleteById(id)
+    dbDeleteById(id);
 }
 
 export const todoRepository = {
     get,
     createByContent,
     toggleDone,
-    deleteById
+    deleteById,
 };
 
 // Model/Schema

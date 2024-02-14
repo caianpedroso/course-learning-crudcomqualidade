@@ -14,10 +14,10 @@ describe("/ - Todos feed", () => {
                         id: "8486e02c-5630-42c5-b374-b36e873cce7e",
                         date: "2024-02-13T11:19:00.999Z",
                         content: "digitar alguma coisa teste",
-                        done: false 
-                    }  
+                        done: false,
+                    },
                 },
-            })
+            });
         }).as("createTodo");
         // 1 - Abrir a página
         cy.visit(BASE_URL);
@@ -25,11 +25,11 @@ describe("/ - Todos feed", () => {
         // 3 - Digitar no input de criar nova todo
         const inputAddTodo = "input[name='add-todo']";
         cy.get(inputAddTodo).type("Test todo");
-        
-        // 4 - Clicar no botão 
+
+        // 4 - Clicar no botão
         const buttonAddTodo = "[aria-label='Adicionar novo item']";
         cy.get(buttonAddTodo).click();
         // 5 - Chacar se na página surgiu um novo elemento
-        cy.get("table > tbody").contains("digitar alguma coisa teste")
-    })
-})
+        cy.get("table > tbody").contains("digitar alguma coisa teste");
+    });
+});
