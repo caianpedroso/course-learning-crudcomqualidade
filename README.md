@@ -1,0 +1,1 @@
+Repositório das aulas do curso "CRUDs com Qualidade"
