@@ -5,7 +5,9 @@ export default function handler(
     request: NextApiRequest,
     response: NextApiResponse,
 ) {
-    console.log(request.method);
+    // eslint-disable-next-line no-console
+    // console.log(request.method);
+
     if (request.method === "GET") {
         todoController.get(request, response);
         return;
@@ -17,6 +19,8 @@ export default function handler(
     }
 
     response.status(405).json({
-        message: "Method not allowed",
+        error: {
+            message: "Method not allowed",
+        },
     });
 }

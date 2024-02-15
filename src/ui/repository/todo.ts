@@ -15,16 +15,21 @@ function get({
     page,
     limit,
 }: TodoRepositoryGetParams): Promise<TodoRepositoryGetOutput> {
-    return fetch("/api/todos").then(async (respostaDoServidor) => {
-        const todosString = await respostaDoServidor.text();
-        const responseParsed = parseTodosFromServer(JSON.parse(todosString));
+    return fetch(`/api/todos?page=${page}&limit=${limit}`).then(
+        async (respostaDoServidor) => {
+            const todosString = await respostaDoServidor.text();
+            // Como garantir a tipagem de tipos desconhecidos?
+            const responseParsed = parseTodosFromServer(
+                JSON.parse(todosString),
+            );
 
-        return {
-            todos: responseParsed.todos,
-            total: responseParsed.total,
-            pages: responseParsed.pages,
-        };
-    });
+            return {
+                total: responseParsed.total,
+                todos: responseParsed.todos,
+                pages: responseParsed.pages,
+            };
+        },
+    );
 }
 
 export async function createByContent(content: string): Promise<Todo> {
@@ -49,7 +54,6 @@ export async function createByContent(content: string): Promise<Todo> {
         if (!serverResponseParsed.success) {
             throw new Error("Failed to create TODO :(");
         }
-        console.log("serverResponse ", serverResponse);
         const todo = serverResponseParsed.data.todo;
         return todo;
     }

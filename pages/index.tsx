@@ -1,7 +1,6 @@
 import React from "react";
 import { GlobalStyles } from "@ui/theme/GlobalStyles";
 import { todoController } from "@ui/controller/todo";
-import { todo } from "node:test";
 
 const bg = "/bg.jpeg";
 
@@ -96,7 +95,8 @@ export default function Page() {
                         placeholder="Filtrar lista atual, ex: Dentista"
                         value={search}
                         onChange={function handleSearch(event) {
-                            console.log("Change ! ", event.target.value);
+                            // eslint-disable-next-line no-console
+                            // console.log("Change ! ", event.target.value);
                             setSearch(event.target.value);
                         }}
                     />
@@ -117,8 +117,8 @@ export default function Page() {
                     <tbody>
                         {homeTodos.map((currentTodo) => {
                             return (
-                                <tr>
-                                    <td key={currentTodo.id}>
+                                <tr key={currentTodo.id}>
+                                    <td>
                                         <input
                                             type="checkbox"
                                             defaultChecked={currentTodo.done}
