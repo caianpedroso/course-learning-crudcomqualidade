@@ -1,4 +1,3 @@
-import { type } from "os";
 import { z as schema } from "zod";
 
 export const TodoSchema = schema.object({

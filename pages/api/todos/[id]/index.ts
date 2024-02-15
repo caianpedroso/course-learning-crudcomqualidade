@@ -2,8 +2,8 @@ import { todoController } from "@server/controller/todo";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(
-  request: NextApiRequest,
-  response: NextApiResponse
+    request: NextApiRequest,
+    response: NextApiResponse,
 ) {
     if (request.method === "DELETE") {
         todoController.deleteById(request, response);
@@ -13,6 +13,6 @@ export default function handler(
     response.status(405).json({
         error: {
             message: "Method not allowed",
-    },
-  });
+        },
+    });
 }

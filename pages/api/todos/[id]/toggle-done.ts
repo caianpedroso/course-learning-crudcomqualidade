@@ -5,13 +5,12 @@ export default function handler(
     request: NextApiRequest,
     response: NextApiResponse,
 ) {
-
     if (request.method === "PUT") {
         todoController.toggleDone(request, response);
         return;
     }
 
     response.status(405).json({
-        message: "Method not allowed"
-    })
+        message: "Method not allowed",
+    });
 }
