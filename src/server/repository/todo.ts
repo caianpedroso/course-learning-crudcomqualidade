@@ -5,6 +5,7 @@ import {
     update,
     deleteById as dbDeleteById,
 } from "../../../core/crud";
+import { Todo, TodoSchema } from "@server/schema/todo";
 
 // Supabase
 // =========
@@ -36,9 +37,15 @@ async function get({
 
     const { data, error, count } = await supabase.from("todos").select("*", { count: "exact"}).range(startIndex, endIndex);
     if(error) throw new Error("Failed to fetch data")
-    console.log("supabaseOutput ", data)
 
-    const todos = data as Todo[];
+    const parsedData = TodoSchema.array().safeParse(data);
+
+    if (!parsedData.success) {
+        // throw parsedData.error;
+        throw new Error("Failed to parse TODO from database");
+    }
+
+    const todos = parsedData.data;
     const total = count || todos.length;
     const totalPages = Math.ceil(total / currentLimit);
     return {
@@ -99,9 +106,9 @@ export const todoRepository = {
 };
 
 // Model/Schema
-interface Todo {
-    id: string;
-    content: string;
-    date: string;
-    done: boolean;
-}
+// interface Todo {
+//     id: string;
+//     content: string;
+//     date: string;
+//     done: boolean;
+// }
