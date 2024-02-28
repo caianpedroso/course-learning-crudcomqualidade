@@ -61,7 +61,7 @@ async function create(req: NextApiRequest, res: NextApiResponse) {
     //Retornar um erro, caso não tenha `content`
     try {
         const createdTodo = await todoRepository.createByContent(body.data.content);
-        
+
         res.status(201).json({
             todo: createdTodo,
         });
@@ -69,10 +69,10 @@ async function create(req: NextApiRequest, res: NextApiResponse) {
         res.status(400).json({
             error: {
                 message: "Faled to create todo", 
-            }
-        })
-    }
-}
+            },
+        });
+    };
+};
 
 async function toggleDone(req: NextApiRequest, res: NextApiResponse) {
     const todoId = req.query.id;
@@ -84,7 +84,7 @@ async function toggleDone(req: NextApiRequest, res: NextApiResponse) {
             },
         });
         return;
-    }
+    };
 
     try {
         const updatedTodo = await todoRepository.toggleDone(todoId);
