@@ -1,0 +1,21 @@
+name: "[CI] Continuos Delivery"
+
+on: 
+    pull_request:
+        types: [opened, synchronize]
+
+jobs:
+    deploy: 
+        runs-on: ubuntu-latest
+        steps: 
+            ## [Common_CI_Steps]
+            - uses: actions/checkout@v3
+            ## =================
+            - name: "Debug"
+              run: |
+                ls -la
+                echo "Segundo comando de debug"
+            - name: "Install Dependencies"
+              run: "npm install"
+            - name: "Lint"
+              run: "npx vercel --prod"
