@@ -14,8 +14,7 @@ jobs:
             - name: "Debug"
               run: |
                 ls -la
-                echo "Segundo comando de debug"
             - name: "Install Dependencies"
               run: "npm install"
-            - name: "Lint"
+            - name: "Deploy"
               run: "npx vercel --prod"
