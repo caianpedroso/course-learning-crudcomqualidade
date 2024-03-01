@@ -28,8 +28,12 @@ async function get({
     const startIndex = (currentPage - 1) * currentLimit;
     const endIndex = currentPage * currentLimit - 1;
 
-    const { data, error, count } = await supabase.from("todos").select("*", { count: "exact"}).order("date", { ascending: false }).range(startIndex, endIndex);
-    if(error) throw new Error("Failed to fetch data")
+    const { data, error, count } = await supabase
+        .from("todos")
+        .select("*", { count: "exact" })
+        .order("date", { ascending: false })
+        .range(startIndex, endIndex);
+    if (error) throw new Error("Failed to fetch data");
 
     const parsedData = TodoSchema.array().safeParse(data);
 
@@ -45,7 +49,7 @@ async function get({
         todos,
         total,
         pages: totalPages,
-    }
+    };
 
     // const currentPage = page || 1;
     // const currentLimit = limit || 10;
@@ -64,11 +68,15 @@ async function get({
 }
 
 async function createByContent(content: string): Promise<Todo> {
-    const { data, error } = await supabase.from("todos").insert([
-        {
-            content,
-        },
-    ]).select().single();
+    const { data, error } = await supabase
+        .from("todos")
+        .insert([
+            {
+                content,
+            },
+        ])
+        .select()
+        .single();
 
     if (error) throw new Error("Failed to create todo");
 
@@ -81,30 +89,35 @@ async function createByContent(content: string): Promise<Todo> {
 
 async function getTodoById(id: string): Promise<Todo> {
     const { data, error } = await supabase
-      .from("todos")
-      .select("*")
-      .eq("id", id)
-      .single();
-  
+        .from("todos")
+        .select("*")
+        .eq("id", id)
+        .single();
+
     if (error) throw new Error("Failed to get todo by id");
-  
+
     const parsedData = TodoSchema.safeParse(data);
     if (!parsedData.success) throw new Error("Failed to parse TODO created");
-  
+
     return parsedData.data;
-  }
+}
 
 async function toggleDone(id: string): Promise<Todo> {
     const todo = await getTodoById(id);
-    const { data, error } = await supabase.from("todos").update({
-        done: !todo.done,
-    }).eq("id", id).select().single();
+    const { data, error } = await supabase
+        .from("todos")
+        .update({
+            done: !todo.done,
+        })
+        .eq("id", id)
+        .select()
+        .single();
 
-    if(error) throw new Error("Failed to get todo by id");
+    if (error) throw new Error("Failed to get todo by id");
 
     const parsedData = TodoSchema.safeParse(data);
 
-    if(!parsedData.success) {
+    if (!parsedData.success) {
         throw new Error("Failed to return updated todo");
     }
 
@@ -124,7 +137,7 @@ async function toggleDone(id: string): Promise<Todo> {
 async function deleteById(id: string) {
     const { error } = await supabase.from("todos").delete().match({
         id,
-    })
+    });
 
     if (error) throw new HttpNotFoundError(`Todo with id "${id}" not found`);
 

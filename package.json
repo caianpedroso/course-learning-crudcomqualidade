@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "eslint './**/*.{jsx,jsx,ts,tsx}'",
     "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"pages/**/*.ts\"",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test": "start-server-and-test dev http://localhost:3000 cy:run"
