@@ -1,0 +1,24 @@
+name: "[CI] Continuos Delivery"
+
+on: 
+    pull_request:
+        types: [opened, synchronize]
+
+env:
+    VERCEL_ORG_ID: team_jiKBZEICg4pwrStRAOCxTYAq
+    VERCEL_PROJECT_ID: prj_WDO3YMfc33RRcGRG9MQxN0aaHrK5
+
+jobs:
+    deploy: 
+        runs-on: ubuntu-latest
+        steps: 
+            ## [Common_CI_Steps]
+            - uses: actions/checkout@v3
+            ## =================
+            - name: "Debug"
+              run: |
+                ls -la
+            - name: "Install Dependencies"
+              run: "npm install"
+            - name: "Deploy"
+              run: "npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}"
