@@ -1,10 +1,10 @@
-import { HttpNotFoundError } from "@server/infra/errors";
 // import {
 //     read,
 //     create,
 //     update,
 //     deleteById as dbDeleteById,
 // } from "../../../core/crud";
+import { HttpNotFoundError } from "@server/infra/errors";
 import { Todo, TodoSchema } from "@server/schema/todo";
 import { supabase } from "@server/infra/db/supabase";
 
@@ -17,7 +17,7 @@ interface TodoRepositoryGetOutput {
     todos: Todo[];
     total: number;
     pages: number;
-}
+};
 
 async function get({
     page,
@@ -65,7 +65,7 @@ async function get({
     //     total: ALL_TODOS.length,
     //     pages: totalPages,
     // };
-}
+};
 
 async function createByContent(content: string): Promise<Todo> {
     const { data, error } = await supabase
@@ -85,7 +85,7 @@ async function createByContent(content: string): Promise<Todo> {
     return parsedData;
     // const newTodo = create(content);
     // return newTodo;
-}
+};
 
 async function getTodoById(id: string): Promise<Todo> {
     const { data, error } = await supabase
@@ -132,7 +132,7 @@ async function toggleDone(id: string): Promise<Todo> {
     //     done: !todo.done,
     // });
     // return updateTodo;
-}
+};
 
 async function deleteById(id: string) {
     const { error } = await supabase.from("todos").delete().match({
@@ -148,7 +148,7 @@ async function deleteById(id: string) {
     // if (!todo) throw new HttpNotFoundError(`Todo with id "${id}" not found`);
 
     // dbDeleteById(id);
-}
+};
 
 export const todoRepository = {
     get,
