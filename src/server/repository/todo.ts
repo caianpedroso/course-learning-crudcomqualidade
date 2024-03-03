@@ -17,7 +17,7 @@ interface TodoRepositoryGetOutput {
     todos: Todo[];
     total: number;
     pages: number;
-}
+};
 
 async function get({
     page,
@@ -148,7 +148,7 @@ async function deleteById(id: string) {
     // if (!todo) throw new HttpNotFoundError(`Todo with id "${id}" not found`);
 
     // dbDeleteById(id);
-}
+};
 
 export const todoRepository = {
     get,
