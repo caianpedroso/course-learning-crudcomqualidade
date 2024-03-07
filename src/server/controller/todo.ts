@@ -86,7 +86,7 @@ async function toggleDone(req: NextApiRequest, res: NextApiResponse) {
             },
         });
         return;
-    };
+    }
 
     try {
         const updatedTodo = await todoRepository.toggleDone(todoId);
@@ -102,8 +102,8 @@ async function toggleDone(req: NextApiRequest, res: NextApiResponse) {
                 },
             });
         }
-    };
-};
+    }
+}
 
 async function deleteById(req: NextApiRequest, res: NextApiResponse) {
     // TODO Validate query schema;

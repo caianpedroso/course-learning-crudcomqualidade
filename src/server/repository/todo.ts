@@ -40,7 +40,7 @@ async function get({
     if (!parsedData.success) {
         // throw parsedData.error;
         throw new Error("Failed to parse TODO from database");
-    };
+    }
 
     const todos = parsedData.data;
     const total = count || todos.length;
@@ -65,7 +65,7 @@ async function get({
     //     total: ALL_TODOS.length,
     //     pages: totalPages,
     // };
-};
+}
 
 async function createByContent(content: string): Promise<Todo> {
     const { data, error } = await supabase
@@ -85,7 +85,7 @@ async function createByContent(content: string): Promise<Todo> {
     return parsedData;
     // const newTodo = create(content);
     // return newTodo;
-};
+}
 
 async function getTodoById(id: string): Promise<Todo> {
     const { data, error } = await supabase
@@ -100,7 +100,7 @@ async function getTodoById(id: string): Promise<Todo> {
     if (!parsedData.success) throw new Error("Failed to parse TODO created");
 
     return parsedData.data;
-};
+}
 
 async function toggleDone(id: string): Promise<Todo> {
     const todo = await getTodoById(id);
@@ -132,7 +132,7 @@ async function toggleDone(id: string): Promise<Todo> {
     //     done: !todo.done,
     // });
     // return updateTodo;
-};
+}
 
 async function deleteById(id: string) {
     const { error } = await supabase.from("todos").delete().match({
