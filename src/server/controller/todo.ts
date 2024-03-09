@@ -103,7 +103,7 @@ async function toggleDone(req: NextApiRequest, res: NextApiResponse) {
             });
         }
     }
-}
+};
 
 async function deleteById(req: NextApiRequest, res: NextApiResponse) {
     // TODO Validate query schema;
@@ -120,7 +120,7 @@ async function deleteById(req: NextApiRequest, res: NextApiResponse) {
             },
         });
         return;
-    }
+    };
 
     try {
         const todoId = parserQuery.data.id;
@@ -140,8 +140,8 @@ async function deleteById(req: NextApiRequest, res: NextApiResponse) {
                 message: `Internal server error`,
             },
         });
-    }
-}
+    };
+};
 
 export const todoController = {
     get,
